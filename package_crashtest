@@ -1,0 +1,10 @@
+#!/bin/sh
+cd /boot/home/projects/ports/crashtest
+package create -b crashtest_1.1-1_any.hpkg
+sleep 0.5
+package add crashtest_1.1-1_any.hpkg data documentation bin boot
+sleep 0.5
+addattr BeShare:Info "Automatic boot volume checker" crashtest_1.1-1_any.hpkg
+becopy crashtest_1.1-1_any.hpkg "/Storage/Haiku/My ports"
+mv crashtest_1.1-1_any.hpkg /boot/home/projects/repo2
+sync

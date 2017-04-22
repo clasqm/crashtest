@@ -1,0 +1,25 @@
+#!/bin/sh
+
+# CrashTest built on 3.12.12
+#adjusted for Haiku with PM 16/10/16, 22/04/2017
+# CrashTest consists of 3 files: 
+# /boot/home/config/boot/launch/CrashTest 		(a script that checks for improper shutdown) 
+# /boot/home/config/settings/crashtest-prev		(the file that CrashTest uses to test for proper shutdown)
+# /boot/home/config/bin/crashtest.sh			(a script to run checkfs in a terminal )
+# 
+# Count the number of times for proper shutdowns in the syslog file
+	checkcount=`cat /boot/system/var/log/syslog | grep "KERN: options = 0" |wc -l`
+# get number from previous log 
+	checkprev=`cat /boot/home/config/settings/crashtest-prev`
+#	checkprev=$[$checkprev+1]
+	if [ $checkcount != $checkprev ]
+	then
+		crashalert=`alert --warning "CrashTest detected an improper shutdown... Should we run a file system check? " "Quit" "Check" `
+		if [ $crashalert = "Check" ] 
+		then 
+			Terminal -t CheckFS crashtest.sh
+		fi
+	fi
+# Update comparison file
+	echo $checkcount > /boot/home/config/settings/crashtest-prev
+

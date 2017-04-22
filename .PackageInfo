@@ -1,0 +1,23 @@
+name				crashtest
+version				1.1-1
+architecture			any
+
+summary			"Automatic boot volume checker"
+Description			"CrashTest will test your system at boot time to see if there was a proper shutdown, and if not, it will give you the option to run a file system scan on your boot drive.
+
+To uninstall this application you will need to remove the link CrashTest from /boot/home/config/boot/launch as well as uninstalling the package.
+"
+
+packager			"Michel Clasquin-Johnson <clasqm@gmail.com>"
+vendor				"clasqm"
+copyrights			"Jimmy@jimmysciacca.com, clasqm@gmail.com"
+licenses				"crashtest"
+provides {
+					crashtest = 1.1-1
+}
+post-install-scripts {
+					"boot/post-install/post_crashtest.sh"
+}
+URLs {
+					http://clasquin-johnson.co.za/michel/haiku
+}
